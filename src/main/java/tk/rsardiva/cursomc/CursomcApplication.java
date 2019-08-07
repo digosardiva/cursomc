@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
 import tk.rsardiva.cursomc.domain.Categoria;
 import tk.rsardiva.cursomc.domain.Cidade;
@@ -30,7 +31,7 @@ import tk.rsardiva.cursomc.repositories.PedidoRepository;
 import tk.rsardiva.cursomc.repositories.ProdutoRepository;
 
 @SpringBootApplication
-public class CursomcApplication implements CommandLineRunner {
+public class CursomcApplication extends SpringBootServletInitializer implements CommandLineRunner {
 	
 	@Autowired
 	private CategoriaRepository categoriaRepository;
