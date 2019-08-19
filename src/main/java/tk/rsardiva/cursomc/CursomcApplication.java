@@ -14,6 +14,7 @@ import tk.rsardiva.cursomc.domain.Cidade;
 import tk.rsardiva.cursomc.domain.Cliente;
 import tk.rsardiva.cursomc.domain.Endereco;
 import tk.rsardiva.cursomc.domain.Estado;
+import tk.rsardiva.cursomc.domain.ItemPedido;
 import tk.rsardiva.cursomc.domain.Pagamento;
 import tk.rsardiva.cursomc.domain.PagamentoComBoleto;
 import tk.rsardiva.cursomc.domain.PagamentoComCartao;
@@ -26,6 +27,7 @@ import tk.rsardiva.cursomc.repositories.CidadeRepository;
 import tk.rsardiva.cursomc.repositories.ClienteRepository;
 import tk.rsardiva.cursomc.repositories.EnderecoRepository;
 import tk.rsardiva.cursomc.repositories.EstadoRepository;
+import tk.rsardiva.cursomc.repositories.ItemPedidoRepository;
 import tk.rsardiva.cursomc.repositories.PagamentoRepository;
 import tk.rsardiva.cursomc.repositories.PedidoRepository;
 import tk.rsardiva.cursomc.repositories.ProdutoRepository;
@@ -49,6 +51,8 @@ public class CursomcApplication extends SpringBootServletInitializer implements 
 	private PedidoRepository pedidoRepository;
 	@Autowired
 	private PagamentoRepository pagamentoRepository;
+	@Autowired
+	private ItemPedidoRepository itemPedidoRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(CursomcApplication.class, args);
@@ -115,6 +119,19 @@ public class CursomcApplication extends SpringBootServletInitializer implements 
 		
 		pedidoRepository.saveAll(Arrays.asList(ped1, ped2));
 		pagamentoRepository.saveAll(Arrays.asList(pagto1, pagto2));
+		
+		ItemPedido ip1 = new ItemPedido(ped1, p1, 0.00, 1, 2000.00);
+		ItemPedido ip2 = new ItemPedido(ped1, p3, 0.00, 2, 80.00);
+		ItemPedido ip3 = new ItemPedido(ped2, p2, 100.00, 1, 800.00);
+		
+		ped1.getItens().addAll(Arrays.asList(ip1, ip2));
+		ped2.getItens().addAll(Arrays.asList(ip3));
+		
+		p1.getItens().addAll(Arrays.asList(ip1));
+		p2.getItens().addAll(Arrays.asList(ip3));
+		p3.getItens().addAll(Arrays.asList(ip2));
+		
+		itemPedidoRepository.saveAll(Arrays.asList(ip1, ip2, ip3));
 		
 	}
 
