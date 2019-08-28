@@ -1,11 +1,13 @@
 package tk.rsardiva.cursomc.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 import tk.rsardiva.cursomc.domain.Categoria;
 import tk.rsardiva.cursomc.repositories.CategoriaRepository;
+import tk.rsardiva.cursomc.services.exceptions.DataIntegrityException;
 import tk.rsardiva.cursomc.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -29,6 +31,15 @@ public class CategoriaService {
 	public Categoria update(Categoria obj) {
 		find(obj.getId());
 		return repo.save(obj);
+	}
+	
+	public void delete(Integer id) {
+		find(id);
+		try {
+			repo.deleteById(id);
+		} catch(DataIntegrityViolationException e) {
+			throw new DataIntegrityException("Não é possível excluir uma categoria que possui produtos");			
+		}
 	}
 	
 }
